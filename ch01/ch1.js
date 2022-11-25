@@ -1,4 +1,4 @@
-import { invoicies, plays } from "./data";
+import { invoicies, plays } from "./data.js";
 
 console.log(invoicies);
 
@@ -13,26 +13,26 @@ function statement(invoice, plays) {
   }).format;
 
   // 1.4 함수 추출하기
-  function amountFor(perf, play) {
-    let thisAmount = 0; // 
+  function amountFor(aPerformance, play) {
+    let result = 0; // 명확한 이름으로 변경
     switch (play.type) {
       case "tragedy":
-        thisAmount = 40000;
-        if (perf.audience > 30) {
-          thisAmount += 1000 * (perf.audience - 30);
+        result = 40000;
+        if (aPerformance.audience > 30) {
+          result += 1000 * (aPerformance.audience - 30);
         }
         break;
       case "comedy":
-        thisAmount = 30000;
-        if (perf.audience > 20) {
-          thisAmount += 10000 + 500 * (perf.audience - 20);
+        result = 30000;
+        if (aPerformance.audience > 20) {
+          result += 10000 + 500 * (aPerformance.audience - 20);
         }
-        thisAmount += 300 * perf.audience;
+        result += 300 * aPerformance.audience;
         break;
       default:
         throw new Error(`unknown type: ${play.type}`);
     }
-    return thisAmount;
+    return result;
   }
 
   console.log(invoice)
