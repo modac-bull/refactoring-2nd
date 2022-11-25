@@ -30,6 +30,15 @@ function playFor(aPerformance) {
   return plays[aPerformance.playID]
 }
 
+function volumeCreditsFor(aPerformance) {
+  let result = 0;
+  result += Math.max(aPerformance.audience - 30, 0);
+  if ("comedy" === playFor(aPerformance).type) 
+    result += Math.floor(aPerformance.audience / 5); 
+  return result;
+  
+}
+
 function statement(invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
@@ -42,16 +51,7 @@ function statement(invoice, plays) {
 
   console.log(invoice)
   for (let perf of invoice.performances) {
-    // const play = playFor(perf); // 우변을 함수로 추출 후 제거
-    
-    // let thisAmount = amountFor(perf); // amountFor()에 함수 선언 바꾸기를 통해 play 매개변수 제거 + 필요없어진 playFor(perf) 매개변수 제거
-
-    // add volume credits
-    volumeCredits += Math.max(perf.audience - 30, 0);
-    // add extra credit for every ten comedy attendees
-    if ("comedy" === playFor(perf).type) volumeCredits += Math.floor(perf.audience / 5);
-
-    // print line for this order
+    volumeCredits += volumeCreditsFor(perf); // 추출한 함수를 이용해 값을 누적
     result += `  ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
       perf.audience
     } seats)\n`;
